@@ -5,7 +5,9 @@ from pydub import AudioSegment
 import redis
 import json
 import subprocess
-import os
+import stat
+import time
+
 print(os.path.abspath("temp/denoised_Conference.wav"))
 
 
@@ -17,12 +19,28 @@ redis_client = redis.Redis(host="localhost", port=6379, db=0, decode_responses=T
 # Function to apply noise reduction using DeepFilterNet
 def denoise_audio(input_path: str, output_path: str):
     try:
+        # Ensure the temp folder exists
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+        # Check if the file exists and unlock it before deleting
+        if os.path.exists(output_path):
+            os.chmod(output_path, stat.S_IWRITE)  # Ensure write permission
+            os.remove(output_path)  # Delete old file
+            time.sleep(1)  # Give some time for the OS to release file lock
+
+        # Run DeepFilterNet
         command = f"deepFilter {input_path} -o {output_path}"
         subprocess.run(command, shell=True, check=True)
+
         return output_path
+    except PermissionError as e:
+        print(f"Permission error: {e}")
+        return input_path  # Return original if denoising fails
     except Exception as e:
         print(f"Noise reduction failed: {e}")
         return input_path  # Return original if denoising fails
+
+
 
 @app.post("/api/voice-to-text")
 async def upload_test(audio: UploadFile = File(...)):
