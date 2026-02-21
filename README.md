@@ -7,7 +7,7 @@ This project is a **FastAPI-based Speech-to-Text** service that supports:
 
 ---
 
-## 🚀 Features
+##  Features
 - Upload an **audio file** and get **transcribed text**.
 - **Noise reduction** before processing.
 - **Autocomplete API** using Redis to store past searches.
@@ -37,7 +37,7 @@ pip install -r requirements.txt
 ### 4⃣ Install Redis (For Autocomplete)
 Redis is used for storing and ranking past search queries.
 
-#### 🔵 **For Linux/macOS**
+####  **For Linux/macOS**
 ```sh
 sudo apt update && sudo apt install redis -y
 ```
@@ -46,7 +46,7 @@ Start Redis:
 redis-server
 ```
 
-#### 🔴 **For Windows**
+####  **For Windows**
 Download Redis from [https://github.com/microsoft/WSL](https://github.com/microsoft/WSL) and run:
 ```sh
 redis-server
@@ -75,7 +75,7 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 }
 ```
 
-### 🔍 **2. Get Autocomplete Suggestions**
+###  **2. Get Autocomplete Suggestions**
 - **Endpoint:** `GET /api/autocomplete?q=your_search`
 - **Response:**
 ```json
@@ -86,14 +86,14 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 ---
 
-## ⚡ Notes
+##  Notes
 - If **Redis is not installed**, **autocomplete won't work**.
 - Noise reduction is done using **DeepFilterNet** (ensure it’s installed).
 - Speech recognition uses **Google Speech API** (can be replaced with Whisper).
 
 ---
 
-## 🎯 Future Enhancements
+##  Future Enhancements
 - Support for **streaming speech recognition**.
 - Whisper-based transcription for **more accuracy**.
 - User **history tracking** and **custom ranking** in Redis.
