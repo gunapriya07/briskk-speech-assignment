@@ -7,7 +7,7 @@ This project is a **FastAPI-based Speech-to-Text** service that supports:
 
 ---
 
-##  Features
+##  Features in briskk speech
 - Upload an **audio file** and get **transcribed text**.
 - **Noise reduction** before processing.
 - **Autocomplete API** using Redis to store past searches.
